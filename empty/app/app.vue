@@ -8,6 +8,7 @@ const states = reactive({
 onBeforeMount(() => {
 	try {
 		useWebAppViewport().expand()
+		console.log('is new')
 	} catch(err: any) {
 		states.errorText = err
 		alert(err)
