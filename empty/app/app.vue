@@ -1,18 +1,29 @@
+<script setup lang="ts">
+import { useWebAppViewport } from 'vue-tg'
+
+const states = reactive({
+	errorText: null as null | string,
+});
+
+onBeforeMount(() => {
+	try {
+		useWebAppViewport().expand()
+	} catch(err: any) {
+		states.errorText = err
+		alert(err)
+	}
+})
+</script>
+
 <template>
-  <div>
-    <h1>TEST 2 WITH PACKAGES "dependencies": {
-    "@nuxt/eslint": "^0.7.4",
-    "@nuxt/image": "^1.8.1",
-    "@nuxt/ui": "^3.3.3",
-    "eslint": "^9.17.0",
-    "nuxt": "^4.1.1",
-    "vue": "^3.5.21",
-    "vue-router": "^4.5.1",
-    "vue-tg": "^0.8.0"
-  }</h1>
-    <UButton>Button</UButton>
-    <UApp>
-      <NuxtPage />
-    </UApp>
-  </div>
+	<div v-if="states.errorText" style="color: red; padding: 20px;">
+		Error: {{ states.errorText }}
+	</div>
+	<UApp v-else>
+		<div class="bg-[var(--ui-bg)]">
+			<NuxtLayout>
+				<NuxtPage />
+			</NuxtLayout>
+		</div>
+	</UApp>
 </template>
